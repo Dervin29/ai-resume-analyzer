@@ -15,7 +15,7 @@ const Navbar = () => {
     navigate("/auth?next=/");
   };
 
-  // close on outside click
+  // Close dropdown on outside click
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
@@ -24,11 +24,14 @@ const Navbar = () => {
     };
 
     document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
+
+    return () => {
+      document.removeEventListener("mousedown", handler);
+    };
   }, []);
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/70 backdrop-blur-md rounded-2xl shadow-sm max-w-7xl mx-auto">
+    <nav className="sticky top-0 z-50 mx-auto max-w-7xl rounded-2xl bg-white/70 backdrop-blur-md shadow-sm">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-5 py-4 md:px-8 lg:px-12">
         {/* Brand */}
         <Link to="/" className="group flex items-center gap-3">
@@ -40,22 +43,26 @@ const Navbar = () => {
             <span className="text-lg font-bold tracking-tight text-gray-900">
               Resumind
             </span>
-            <span className="text-xs text-gray-500">AI Resume Analyzer</span>
+
+            <span className="text-xs text-gray-500">
+              AI Resume Analyzer
+            </span>
           </div>
         </Link>
 
-        {/* Right side */}
+        {/* Right Side */}
         <div className="flex items-center gap-4">
+          {/* Secondary CTA */}
           <Link
             to="/upload"
-            className="rounded-xl bg-black px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-gray-900"
+            className="rounded-xl border border-black/10 bg-white px-5 py-2.5 text-sm font-semibold text-gray-800 transition-all duration-200 hover:bg-gray-50"
           >
             Upload
           </Link>
 
+          {/* User Menu */}
           {auth.isAuthenticated && (
             <div className="relative" ref={menuRef}>
-              {/* Avatar button */}
               <button
                 onClick={() => setOpen((v) => !v)}
                 className="flex h-10 w-10 items-center justify-center rounded-full bg-black text-sm font-bold text-white shadow-sm transition hover:scale-105"
@@ -63,19 +70,21 @@ const Navbar = () => {
                 U
               </button>
 
-              {/* Dropdown */}
               {open && (
                 <div className="absolute right-0 mt-3 w-48 overflow-hidden rounded-2xl border border-black/10 bg-white shadow-lg">
                   <div className="border-b border-black/5 px-4 py-3">
                     <p className="text-sm font-semibold text-gray-900">
                       Account
                     </p>
-                    <p className="text-xs text-gray-500">Manage your profile</p>
+
+                    <p className="text-xs text-gray-500">
+                      Manage your profile
+                    </p>
                   </div>
 
                   <button
                     onClick={handleLogout}
-                    className="w-full px-4 py-3 text-left text-sm text-red-600 hover:bg-red-50"
+                    className="w-full px-4 py-3 text-left text-sm text-red-600 transition hover:bg-red-50"
                   >
                     Logout
                   </button>

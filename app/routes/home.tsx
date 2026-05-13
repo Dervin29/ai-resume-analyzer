@@ -54,8 +54,8 @@ export default function Home() {
 
       <section className="mx-auto w-full max-w-7xl px-5 py-10 md:px-8 lg:px-12">
         {/* Hero Section */}
-        <div className="relative overflow-hidden rounded-3xl border border-black/5 bg-white/60 backdrop-blur-xl p-8 shadow-[0_10px_40px_rgba(15,23,42,0.08)] md:p-12">
-          <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent pointer-events-none" />
+        <div className="relative overflow-hidden rounded-3xl border border-black/5 bg-white/60 p-8 shadow-[0_10px_40px_rgba(15,23,42,0.08)] backdrop-blur-xl md:p-12">
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-white/40 to-transparent" />
 
           <div className="relative z-10 flex flex-col gap-6">
             <div className="space-y-4">
@@ -69,24 +69,33 @@ export default function Home() {
 
               {!loadingResumes && resumes?.length === 0 ? (
                 <p className="max-w-2xl text-base leading-7 text-gray-600 md:text-lg">
-                  No resumes found yet. Upload your first resume and get
-                  structured AI-powered feedback instantly.
+                  Upload your first resume and receive AI-powered ATS scoring,
+                  structured feedback, and actionable improvement suggestions in
+                  seconds.
                 </p>
               ) : (
                 <p className="max-w-2xl text-base leading-7 text-gray-600 md:text-lg">
-                  Review your submissions, monitor resume performance, and
+                  Monitor your resume performance, compare submissions, and
                   improve your chances with detailed AI insights.
                 </p>
               )}
             </div>
 
-            {!loadingResumes && resumes?.length === 0 && (
-              <div className="pt-2">
+            {/* Hero CTA Buttons */}
+            {!loadingResumes && (
+              <div className="flex flex-wrap gap-4 pt-2">
                 <Link
                   to="/upload"
                   className="inline-flex items-center justify-center rounded-xl bg-black px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-gray-900 active:scale-[0.98]"
                 >
-                  Upload Resume
+                  Analyze My Resume
+                </Link>
+
+                <Link
+                  to="/how-it-works"
+                  className="inline-flex items-center justify-center rounded-xl border border-black/10 bg-white px-6 py-3 text-sm font-semibold text-gray-800 transition-all duration-200 hover:bg-gray-50"
+                >
+                  How It Works
                 </Link>
               </div>
             )}
@@ -118,6 +127,7 @@ export default function Home() {
                 <h2 className="text-2xl font-bold text-gray-900">
                   Your Resumes
                 </h2>
+
                 <p className="mt-1 text-sm text-gray-500">
                   {resumes.length} resume
                   {resumes.length > 1 ? "s" : ""} available
@@ -128,7 +138,7 @@ export default function Home() {
                 to="/upload"
                 className="hidden rounded-xl border border-black/10 bg-white px-5 py-2.5 text-sm font-semibold text-gray-800 shadow-[0_10px_40px_rgba(15,23,42,0.08)] transition-all duration-200 hover:border-black/20 hover:bg-gray-50 md:inline-flex"
               >
-                Upload New
+                Analyze Another Resume
               </Link>
             </div>
 
@@ -161,16 +171,25 @@ export default function Home() {
             </h3>
 
             <p className="mt-3 max-w-md text-sm leading-6 text-gray-500">
-              Upload your resume to receive AI-powered feedback, ATS scoring,
-              and improvement suggestions.
+              Upload your resume to receive ATS scoring, AI-powered feedback,
+              and detailed improvement suggestions.
             </p>
 
-            <Link
-              to="/upload"
-              className="mt-6 inline-flex items-center justify-center rounded-xl bg-black px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-gray-900 active:scale-[0.98]"
-            >
-              Upload Resume
-            </Link>
+            <div className="mt-6 flex flex-wrap justify-center gap-4">
+              <Link
+                to="/upload"
+                className="inline-flex items-center justify-center rounded-xl bg-black px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-gray-900 active:scale-[0.98]"
+              >
+                Upload Resume
+              </Link>
+
+              <Link
+                to="/sample-report"
+                className="inline-flex items-center justify-center rounded-xl border border-black/10 bg-white px-6 py-3 text-sm font-semibold text-gray-800 transition-all duration-200 hover:bg-gray-50"
+              >
+                View Sample Report
+              </Link>
+            </div>
           </div>
         )}
       </section>
