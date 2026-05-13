@@ -4,6 +4,7 @@ import ResumeCard from "~/components/ResumeCard";
 import { usePuterStore } from "~/lib/puter";
 import { Link, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
+import { FileText, UploadCloud, Sparkles } from "lucide-react";
 
 export function meta({}: Route.MetaArgs) {
   return [
@@ -104,23 +105,14 @@ export default function Home() {
 
         {/* Loader */}
         {loadingResumes && (
-          <div className="mt-10 space-y-6">
-            <div className="animate-pulse rounded-3xl border border-white/30 bg-white/60 p-8 backdrop-blur-xl">
-              <div className="h-6 w-40 rounded bg-gray-200" />
-              <div className="mt-4 h-4 w-96 rounded bg-gray-200" />
-              <div className="mt-2 h-4 w-80 rounded bg-gray-200" />
+          <div className="flex min-h-[320px] flex-col items-center justify-center gap-4">
+            <div className="rounded-2xl border border-white/30 bg-white/70 p-6 shadow-[0_10px_40px_rgba(15,23,42,0.08)] backdrop-blur-md">
+              <div className="w-[180px] h-[180px] flex items-center justify-center">
+                <div className="w-12 h-12 rounded-full border-2 border-gray-300 border-t-gray-800 animate-spin" />
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="h-40 animate-pulse rounded-2xl border border-white/30 bg-white/50"
-                />
-              ))}
-            </div>
-
-            <p className="text-center text-sm text-gray-500">
+            <p className="text-sm font-medium text-gray-500">
               Loading your resumes...
             </p>
           </div>
@@ -164,29 +156,35 @@ export default function Home() {
 
         {/* Empty State */}
         {!loadingResumes && resumes?.length === 0 && (
-          <div className="mt-10 flex flex-col items-center justify-center rounded-3xl border border-dashed border-black/10 bg-white/50 px-6 py-16 text-center backdrop-blur-sm">
-            <div className="mb-5 rounded-2xl bg-black/5 p-4">
-              <img
-                src="/images/resume-scan-2.gif"
-                alt="Empty resumes"
-                className="w-[120px]"
-              />
+          <div className="mt-10 flex flex-col items-center justify-center rounded-3xl border border-dashed border-black/10 bg-white/40 px-8 py-16 text-center backdrop-blur-sm">
+            {/* Icon cluster */}
+            <div className="mb-6 flex gap-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-black/5">
+                <FileText className="h-5 w-5 text-gray-700" />
+              </div>
+
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-black/5">
+                <UploadCloud className="h-5 w-5 text-gray-700" />
+              </div>
+
+              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-black/5">
+                <Sparkles className="h-5 w-5 text-gray-700" />
+              </div>
             </div>
 
-            <h3 className="text-2xl font-bold text-gray-900">
-              No resumes uploaded
-            </h3>
+            <h3 className="text-2xl font-bold text-gray-900">No resumes yet</h3>
 
             <p className="mt-3 max-w-md text-sm leading-6 text-gray-500">
-              Upload your resume to receive ATS scoring, AI-powered feedback,
-              and detailed improvement suggestions.
+              Upload your resume to get ATS scoring, keyword analysis, and
+              structured AI feedback in seconds.
             </p>
 
-            <div className="mt-6 flex flex-wrap justify-center gap-4">
+            <div className="mt-8 flex flex-wrap justify-center gap-4">
               <Link
                 to="/upload"
-                className="inline-flex items-center justify-center rounded-xl bg-black px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-gray-900 active:scale-[0.98]"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-black px-6 py-3 text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02] hover:bg-gray-900 active:scale-[0.98]"
               >
+                <UploadCloud className="h-4 w-4" />
                 Upload Resume
               </Link>
 
