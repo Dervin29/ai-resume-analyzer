@@ -9,11 +9,12 @@ export const meta = () => {
   ];
 };
 
-const auth = () => {
+const Auth = () => {
   const { isLoading, auth } = usePuterStore();
   const location = useLocation();
-  const next = location.search.split("next=")[1];
   const navigate = useNavigate();
+
+  const next = location.search.split("next=")[1] || "/";
 
   useEffect(() => {
     if (auth.isAuthenticated) {
@@ -22,35 +23,47 @@ const auth = () => {
   }, [auth.isAuthenticated, next]);
 
   return (
-    <main className="bg-[url('/images/bg-auth.svg')] bg-cover min-h-screen flex items-center justify-center">
-      <div className="gradient-border shadow-lg">
-        <section className=" flex flex-col gap-8 bg-white rounded-2xl p-10">
-          <div className=" flex flex-col items-center gap-2 text-center">
-            <h1>Welcome</h1>
-            <h2>Login to continue your job journey</h2>
-          </div>
+    <main className="min-h-screen bg-[#f8fafc] bg-[radial-gradient(circle_at_top_left,_rgba(99,102,241,0.18),_transparent_30%),radial-gradient(circle_at_top_right,_rgba(168,85,247,0.14),_transparent_35%),linear-gradient(to_bottom,_#ffffff,_#f1f5f9)] flex items-center justify-center px-5">
+      <div className="w-full max-w-md rounded-3xl border border-black/5 bg-white/80 p-8 shadow-sm backdrop-blur-md">
+        
+        {/* Header */}
+        <div className="mb-8 text-center">
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900">
+            Welcome
+          </h1>
+          <p className="mt-2 text-sm text-gray-600">
+            Login to continue your job journey
+          </p>
+        </div>
 
-          <div>
-            {isLoading ? (
-              <button className=" auth-button animate-pulse">Loading...</button>
-            ) : (
-              <>
-                {auth.isAuthenticated ? (
-                  <button className="auth-button" onClick={auth.signOut}>
-                    <p>Logout</p>
-                  </button>
-                ) : (
-                  <button className="auth-button" onClick={auth.signIn}>
-                    <p>Login</p>
-                  </button>
-                )}
-              </>
-            )}
-          </div>
-        </section>
+        {/* Button Area */}
+        <div className="flex flex-col gap-4">
+          {isLoading ? (
+            <button
+              disabled
+              className="h-11 w-full rounded-xl bg-black/70 text-sm font-semibold text-white opacity-70"
+            >
+              Loading...
+            </button>
+          ) : auth.isAuthenticated ? (
+            <button
+              onClick={auth.signOut}
+              className="h-11 w-full rounded-xl border border-black/10 bg-white text-sm font-semibold text-gray-800 shadow-sm transition hover:bg-gray-50"
+            >
+              Logout
+            </button>
+          ) : (
+            <button
+              onClick={auth.signIn}
+              className="h-11 w-full rounded-xl bg-black text-sm font-semibold text-white shadow-sm transition hover:bg-gray-900 active:scale-[0.98]"
+            >
+              Login
+            </button>
+          )}
+        </div>
       </div>
     </main>
   );
 };
 
-export default auth;
+export default Auth;

@@ -15,46 +15,67 @@ const ResumeCard = ({
     const loadResume = async () => {
       const blob = await fs.read(imagePath);
       if (!blob) return;
-      let url = URL.createObjectURL(blob);
+
+      const url = URL.createObjectURL(blob);
       setResumeUrl(url);
     };
 
     loadResume();
+
+    return () => {
+      if (resumeUrl) URL.revokeObjectURL(resumeUrl);
+    };
   }, [imagePath]);
 
   return (
     <Link
       to={`/resume/${id}`}
-      className="resume-card animate-in fade-in duration-1000"
+      className="group block overflow-hidden rounded-2xl border border-black/5 bg-white/70 shadow-sm backdrop-blur-md transition-all duration-200 hover:-translate-y-1 hover:shadow-md"
     >
-      <div className="resume-card-header">
-        <div className="flex flex-col gap-2">
-          {companyName && (
-            <h2 className="!text-black font-bold break-words">{companyName}</h2>
+      {/* Header */}
+      <div className="flex items-start justify-between gap-4 border-b border-black/5 p-5">
+        <div className="min-w-0 flex flex-col gap-1">
+          {companyName ? (
+            <h2 className="truncate text-base font-bold text-gray-900">
+              {companyName}
+            </h2>
+          ) : (
+            <h2 className="text-base font-bold text-gray-900">Resume</h2>
           )}
+
           {jobTitle && (
-            <h3 className="text-lg break-words text-gray-500">{jobTitle}</h3>
-          )}
-          {!companyName && !jobTitle && (
-            <h2 className="!text-black font-bold">Resume</h2>
+            <h3 className="truncate text-sm text-gray-500">{jobTitle}</h3>
           )}
         </div>
+
         <div className="flex-shrink-0">
           <ScoreCircle score={feedback.overallScore} />
         </div>
       </div>
-      {resumeUrl && (
-        <div className="gradient-border animate-in fade-in duration-1000">
-          <div className="w-full h-full">
+
+      {/* Preview */}
+      <div className="relative bg-gradient-to-b from-gray-50 to-white p-4">
+        {resumeUrl ? (
+          <div className="overflow-hidden rounded-xl border border-black/5">
             <img
               src={resumeUrl}
-              alt="resume"
-              className="w-full h-[350px] max-sm:h-[200px] object-cover object-top"
+              alt="resume preview"
+              className="h-[260px] w-full object-cover object-top transition-transform duration-300 group-hover:scale-[1.02] md:h-[300px]"
             />
           </div>
-        </div>
-      )}
+        ) : (
+          <div className="flex h-[260px] items-center justify-center rounded-xl border border-dashed border-black/10 bg-white md:h-[300px]">
+            <p className="text-sm text-gray-400">Loading preview...</p>
+          </div>
+        )}
+      </div>
+
+      {/* Footer subtle hover hint */}
+      <div className="border-t border-black/5 px-5 py-3 text-xs text-gray-500">
+        Click to view detailed analysis
+      </div>
     </Link>
   );
 };
+
 export default ResumeCard;

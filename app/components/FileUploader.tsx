@@ -29,8 +29,15 @@ const FileUploader = ({ onFileSelect }: FileUploaderProps) => {
       setFile(selectedFile);
       onFileSelect?.(selectedFile);
     },
-    [onFileSelect],
+    [onFileSelect]
   );
+
+  const removeFile = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+
+    setFile(null);
+    onFileSelect?.(null);
+  };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
@@ -42,63 +49,105 @@ const FileUploader = ({ onFileSelect }: FileUploaderProps) => {
   });
 
   return (
-    <div className="w-full gradient-border">
+    <div className="w-full">
       <div
         {...getRootProps()}
-        className={`p-8 border-2 border-dashed rounded-xl text-center transition cursor-pointer ${
-          isDragActive ? "border-blue-500 bg-blue-50" : "border-gray-300"
+        className={`group relative overflow-hidden rounded-2xl border border-dashed p-8 transition-all duration-200 cursor-pointer ${
+          isDragActive
+            ? "border-black/30 bg-black/[0.03]"
+            : "border-black/10 bg-white hover:border-black/20 hover:bg-black/[0.02]"
         }`}
       >
         <input {...getInputProps()} />
 
-        <div className="space-y-4">
-          {file ? (
-            <div
-              className="uploader-selected-file"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <img src="/images/pdf.png" alt="pdf" className="size-10" />
-              <div className=" flex items-center space-x-3">
-                <div>
-                  <p className="text-lg font-semibold text-green-600 truncate max-w-xs">
-                    {file.name}
-                  </p>
-                  <p className="text-sm text-gray-500">
-                    {formatFileSize(file.size)}
-                  </p>
-                </div>
-              </div>
+        {/* Background Glow */}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-black/[0.015] to-transparent opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
 
-              <button
-                className="  p-2 cursor-pointer"
-                onClick={(e) => {
-                  onFileSelect?.(null);
-                }}
-                type="button"
-              >
-                <img src="/icons/cross.svg" alt="remove" className=" w-4 h-4" />
-              </button>
+        {/* Empty State */}
+        {!file ? (
+          <div className="relative z-10 flex flex-col items-center justify-center text-center">
+            <div
+              className={`flex h-20 w-20 items-center justify-center rounded-2xl border transition-all duration-200 ${
+                isDragActive
+                  ? "border-black/20 bg-black text-white"
+                  : "border-black/10 bg-black/[0.03]"
+              }`}
+            >
+              <img
+                src="/icons/info.svg"
+                alt="Upload"
+                className={`h-10 w-10 transition-all duration-200 ${
+                  isDragActive ? "invert" : "opacity-80"
+                }`}
+              />
             </div>
-          ) : (
-            <div>
-              <div className="mx-auto w-16 h-16 flex items-center justify-center">
+
+            <div className="mt-6 space-y-2">
+              <h3 className="text-lg font-semibold text-gray-900">
+                {isDragActive
+                  ? "Drop your resume here"
+                  : "Upload your resume"}
+              </h3>
+
+              <p className="text-sm leading-6 text-gray-500">
+                Drag and drop your PDF file here, or click to browse
+              </p>
+
+              <div className="inline-flex items-center rounded-full border border-black/10 bg-black/[0.03] px-4 py-1.5 text-xs font-medium text-gray-600">
+                PDF only • Max {formatFileSize(maxFileSize)}
+              </div>
+            </div>
+          </div>
+        ) : (
+          /* Selected File State */
+          <div
+            className="relative z-10 flex items-center justify-between gap-4 rounded-2xl border border-black/10 bg-white p-4 shadow-sm"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex min-w-0 items-center gap-4">
+              {/* PDF Icon */}
+              <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-black text-white">
                 <img
-                  src="/icons/info.svg"
-                  alt="Upload Icon"
-                  className="size-20"
+                  src="/images/pdf.png"
+                  alt="PDF"
+                  className="h-8 w-8 object-contain"
                 />
               </div>
-              <p className="text-lg text-gray-500">
-                <span className="font-semibold">Click to upload</span> or drag &
-                drop
-              </p>
 
-              <p className="text-sm text-gray-400">
-                PDF only (max {formatFileSize(maxFileSize)})
-              </p>
+              {/* File Details */}
+              <div className="min-w-0">
+                <p className="truncate text-sm font-semibold text-gray-900 md:text-base">
+                  {file.name}
+                </p>
+
+                <div className="mt-1 flex items-center gap-2">
+                  <span className="text-xs text-gray-500">
+                    {formatFileSize(file.size)}
+                  </span>
+
+                  <span className="h-1 w-1 rounded-full bg-gray-300" />
+
+                  <span className="text-xs font-medium text-green-600">
+                    Ready to analyze
+                  </span>
+                </div>
+              </div>
             </div>
-          )}
-        </div>
+
+            {/* Remove Button */}
+            <button
+              type="button"
+              onClick={removeFile}
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-black/10 bg-white transition-all duration-200 hover:bg-black hover:text-white"
+            >
+              <img
+                src="/icons/cross.svg"
+                alt="Remove"
+                className="h-4 w-4"
+              />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
