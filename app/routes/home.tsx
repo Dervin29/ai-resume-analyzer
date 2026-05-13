@@ -104,16 +104,23 @@ export default function Home() {
 
         {/* Loader */}
         {loadingResumes && (
-          <div className="flex min-h-[320px] flex-col items-center justify-center gap-4">
-            <div className="rounded-2xl border border-white/30 bg-white/70 p-6 shadow-[0_10px_40px_rgba(15,23,42,0.08)] backdrop-blur-md">
-              <img
-                src="/images/resume-scan-2.gif"
-                alt="Loading resumes"
-                className="w-[180px] object-contain"
-              />
+          <div className="mt-10 space-y-6">
+            <div className="animate-pulse rounded-3xl border border-white/30 bg-white/60 p-8 backdrop-blur-xl">
+              <div className="h-6 w-40 rounded bg-gray-200" />
+              <div className="mt-4 h-4 w-96 rounded bg-gray-200" />
+              <div className="mt-2 h-4 w-80 rounded bg-gray-200" />
             </div>
 
-            <p className="text-sm font-medium text-gray-500">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="h-40 animate-pulse rounded-2xl border border-white/30 bg-white/50"
+                />
+              ))}
+            </div>
+
+            <p className="text-center text-sm text-gray-500">
               Loading your resumes...
             </p>
           </div>

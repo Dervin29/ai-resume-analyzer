@@ -81,6 +81,12 @@ export default function HowItWorks() {
                 Analyze My Resume
               </Link>
 
+              <Link
+                to="/sample-report"
+                className="inline-flex items-center justify-center rounded-xl border border-black/10 bg-white px-6 py-3 text-sm font-semibold text-gray-800 transition-all duration-200 hover:bg-gray-50"
+              >
+                View Sample Report
+              </Link>
             </div>
           </div>
         </div>
