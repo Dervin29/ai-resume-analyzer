@@ -1,87 +1,84 @@
-# Welcome to React Router!
+# AI Resume Analyzer
 
-A modern, production-ready template for building full-stack React applications using React Router.
+AI Resume Analyzer is a web application that helps users evaluate and improve their resumes using AI-powered feedback. It analyzes resume content against job descriptions, provides an ATS score, and generates structured improvement suggestions.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+## Live Demo
+https://ai-resume-analyzer-pied-six.vercel.app/
 
 ## Features
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+- Upload resume (PDF)
+- Automatic PDF preview generation
+- AI-powered resume analysis
+- ATS score evaluation
+- Structured feedback (summary, improvements, details)
+- Resume history dashboard
+- Individual resume review pages
+- Authentication system
 
-## Getting Started
+## Tech Stack
 
-### Installation
+- React (Router-based architecture)
+- TypeScript
+- Tailwind CSS
+- Puter (auth, storage, KV, AI services)
+- PDF processing utilities
+- Vercel (deployment)
 
-Install the dependencies:
+## How It Works
 
-```bash
-npm install
-```
+1. User uploads a resume (PDF)
+2. System converts PDF into image preview
+3. Files are stored in cloud storage (fs)
+4. Resume metadata is saved in KV store
+5. AI analyzes resume against job description
+6. Feedback is generated and stored
+7. User views results in dashboard and detailed review page
 
-### Development
+## Pages
 
-Start the development server with HMR:
+### Home
+- Displays all uploaded resumes
+- Shows ATS score preview
+- Entry point for analysis
 
-```bash
-npm run dev
-```
+### Upload
+- Accepts resume + job details
+- Triggers AI analysis pipeline
 
-Your application will be available at `http://localhost:5173`.
+### Resume Detail
+- Shows resume preview
+- Displays AI feedback:
+  - Summary
+  - ATS score
+  - Detailed suggestions
 
-## Building for Production
+### Auth
+- Login/logout using provider auth
+- Protected routes for authenticated users
 
-Create a production build:
+## Project Structure
 
-```bash
-npm run build
-```
+- `/components` - UI components (Navbar, Cards, Score UI, etc.)
+- `/routes` - Application pages
+- `/lib` - Utility functions and integrations
+- `/constants` - Prompt and configuration logic
+
+## Key Features Internals
+
+- PDF → Image conversion for preview
+- KV-based resume persistence
+- AI prompt engineering for structured feedback
+- Object URL handling for file previews
 
 ## Deployment
 
-### Docker Deployment
+Deployed on Vercel.
 
-To build and run using Docker:
+## Future Improvements
 
-```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
-```
-
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
+- Resume comparison over time
+- Multiple ATS models
+- Job-specific scoring breakdown
+- Exportable feedback reports (PDF)
+- Team / recruiter dashboard
